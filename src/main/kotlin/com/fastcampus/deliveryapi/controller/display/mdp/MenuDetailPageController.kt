@@ -19,7 +19,7 @@ class MenuDetailPageController (
 
     @GetMapping("/apis/display/menus/{menuId}")
     fun detail(@PathVariable menuId: Long, @RequestParam storeId: Long): MenuDetailPageResponse {
-        val menuOptional = menuService.findByMenuId(menuId, storeId);
+        val menuOptional = menuService.findByMenuId(menuId, storeId)
 
         if(menuOptional.isEmpty){
             val exceptionMessage = "요청하신 메뉴 정보를 찾을 수 없습니다. (${menuId})"
