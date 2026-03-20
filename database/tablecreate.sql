@@ -72,6 +72,9 @@ CREATE TABLE food_delivery.menus (
     PRIMARY KEY (`menu_id`),
     INDEX `idx_01_store_id` (`store_id` ASC) VISIBLE);
 
+alter table food_delivery.menus add description varchar(500) null comment '설명' after price;
+alter table food_delivery.menus add menu_main_image varchar(500) null comment '메뉴 이미지' after description;
+
 CREATE TABLE food_delivery.categories (
                                               `category_id` BIGINT(8) NOT NULL AUTO_INCREMENT COMMENT '음식 카테고리 ID',
     `category_name` VARCHAR(45) NOT NULL COMMENT '카테고리 이름',

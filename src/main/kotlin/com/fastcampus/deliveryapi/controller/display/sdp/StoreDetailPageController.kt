@@ -5,6 +5,7 @@ import com.fastcampus.deliveryapi.controller.display.sdp.dto.StoreDetailPageResp
 import com.fastcampus.deliveryapi.exception.NotFoundStoreException
 import com.fastcampus.deliveryapi.service.menu.MenuService
 import com.fastcampus.deliveryapi.service.store.StoreService
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -16,6 +17,7 @@ class StoreDetailPageController (
     private val storeService: StoreService,
     private val menuService: MenuService
 ){
+    private val logger = KotlinLogging.logger {}
 
     @GetMapping("/apis/display/stores/{storeId}")
     fun list(@PathVariable("storeId") storeId: Long): StoreDetailPageResponse {

@@ -8,8 +8,8 @@ data class MenuDTO(
     val menuName: String,
     val storeId: Long,
     val price: BigDecimal,
-    /*val description: String,
-    val menuImageUrl: String,*/
+    val description: String,
+    val menuImageUrl: String,
 ) {
     companion object {
         fun from(menu: Menu): MenuDTO {
@@ -18,8 +18,8 @@ data class MenuDTO(
                 menuName = menu.menuName,
                 storeId = menu.storeId,
                 price = menu.price,
-                /*description = menu.description,
-                menuImageUrl = menu.menuMainImageUrl,*/
+                description = menu.description,
+                menuImageUrl = menu.menuMainImageUrl,
             )
         }
     }

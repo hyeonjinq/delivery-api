@@ -26,8 +26,8 @@ class Menu(
     @Column(name = "menuName", nullable = false)
     val menuName: String,
 
-    /*@Column(name = "menuMainImage", nullable = false)
-    val menuMainImageUrl: String,*/
+    @Column(name = "menuMainImage", nullable = false)
+    val menuMainImageUrl: String,
 
     @Column(name = "price", nullable = false)
     val price: BigDecimal,
@@ -36,8 +36,8 @@ class Menu(
     @Column(name = "status", nullable = false)
     val menuStatus: MenuStatus = MenuStatus.READY,
 
-    /*@Column(name = "description", nullable = false)
-    val description: String,*/
+    @Column(name = "description", nullable = false)
+    val description: String,
 
     @Column(name = "isDeleted", nullable = false)
     val isDeleted: Boolean = false,
