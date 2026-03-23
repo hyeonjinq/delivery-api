@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service
 class CartService (
     private val cartRepository: CartRepository
 ){
+    companion object {
+        private const val INIT_QUANTITY = 1
+    }
 
     fun findByCustomerId(customerId: Long) : Cart{
         val cartOptional = cartRepository.findAllByCustomerIdAndIsDeleted(customerId, false)
-
         if (cartOptional.isEmpty) {
-            throw NotFoundException("고객님의 장바구니 정보를 찾을 수 없습니다.");
+            throw NotFoundException("고객님의 장바구니 정보를 찾을 수 없습니다.")
         }
         return cartOptional.get()
     }
