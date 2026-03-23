@@ -29,4 +29,6 @@ interface CartItemRepository: JpaRepository<CartItem, Long> {
         """
     )
     fun findAllByCartId(cartId: Long): List<CartMenu>
+
+    fun findAllByCartIdAndMenuIdIn(cartId: Long, menuIds: List<Long>): List<CartItem>
 }
