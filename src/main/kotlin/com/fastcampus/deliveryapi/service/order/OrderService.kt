@@ -2,6 +2,7 @@ package com.fastcampus.deliveryapi.service.order
 
 import com.fastcampus.deliveryapi.controller.order.dto.OrderRequest
 import com.fastcampus.deliveryapi.domain.catalog.menu.MenuStatus
+import com.fastcampus.deliveryapi.domain.order.OrderDetail
 import com.fastcampus.deliveryapi.domain.order.OrderUUIDGenerator
 import com.fastcampus.deliveryapi.domain.store.StoreStatus
 import com.fastcampus.deliveryapi.exception.DuplicateOrderException
@@ -10,6 +11,7 @@ import com.fastcampus.deliveryapi.exception.InvalidQuantityException
 import com.fastcampus.deliveryapi.exception.MenuNotAvailableException
 import com.fastcampus.deliveryapi.exception.NotFoundCheckoutException
 import com.fastcampus.deliveryapi.exception.NotFoundMenuException
+import com.fastcampus.deliveryapi.exception.NotFoundOrderException
 import com.fastcampus.deliveryapi.exception.NotFoundStoreException
 import com.fastcampus.deliveryapi.exception.StoreNotAvailableException
 import com.fastcampus.deliveryapi.repository.checkout.Checkout
@@ -19,6 +21,8 @@ import com.fastcampus.deliveryapi.repository.checkoutitem.CheckoutItemRepository
 import com.fastcampus.deliveryapi.repository.menu.MenuRepository
 import com.fastcampus.deliveryapi.repository.order.Order
 import com.fastcampus.deliveryapi.repository.order.OrderRepository
+import com.fastcampus.deliveryapi.repository.orderdiscount.OrderDiscountItem
+import com.fastcampus.deliveryapi.repository.orderdiscount.OrderDiscountItemRepository
 import com.fastcampus.deliveryapi.repository.orderitem.OrderItem
 import com.fastcampus.deliveryapi.repository.orderitem.OrderItemRepository
 import com.fastcampus.deliveryapi.repository.store.StoreRepository
@@ -39,6 +43,7 @@ class OrderService(
     private val checkoutItemRepository: CheckoutItemRepository,
     private val orderRepository: OrderRepository,
     private val orderItemRepository: OrderItemRepository,
+    private val orderDiscountItemRepository : OrderDiscountItemRepository,
     private val storeRepository: StoreRepository,
     private val menuRepository: MenuRepository
 ) {
@@ -285,5 +290,28 @@ class OrderService(
         if (totalAmount < minimumOrderAmount) {
             throw InvalidOrderException("최소 주문 금액은 ${minimumOrderAmount}원입니다. 현재 금액: ${totalAmount}원")
         }
+    }
+
+    /**
+     * 주문 상세 조회
+     */
+    fun detail(orderId: Long): OrderDetail {
+        val orderOptional = orderRepository.findById(orderId)
+        if (orderOptional.isEmpty) {
+            throw NotFoundOrderException("요청한 주문서($orderId) 정보를 찾을 수 없습니다.")
+        }
+
+        val order = orderOptional.get()
+        val orderItemMenus = orderItemRepository.findAllByOrderId(orderId = orderId)
+        val orderDiscountItems = orderDiscountItemRepository.findAllByOrderId(orderId = orderId)
+        val orderDiscountItem: OrderDiscountItem? = if (orderDiscountItems.isNotEmpty()) orderDiscountItems.first() else null
+
+        return OrderDetail(
+            orderId = orderId,
+            customerId = order.customerId,
+            storeId = order.storeId,
+            orderItems = orderItemMenus,
+            orderDiscountItem = orderDiscountItem
+        )
     }
 }
