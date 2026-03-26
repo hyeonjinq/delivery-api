@@ -295,8 +295,8 @@ class OrderService(
     /**
      * 주문 상세 조회
      */
-    fun detail(orderId: Long): OrderDetail {
-        val orderOptional = orderRepository.findById(orderId)
+    fun detail(orderId: Long, customerId: Long): OrderDetail {
+        val orderOptional = orderRepository.findByOrderIdAndCustomerId(orderId, customerId)
         if (orderOptional.isEmpty) {
             throw NotFoundOrderException("요청한 주문서($orderId) 정보를 찾을 수 없습니다.")
         }

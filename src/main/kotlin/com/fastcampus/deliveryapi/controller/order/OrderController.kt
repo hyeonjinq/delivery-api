@@ -29,7 +29,7 @@ class OrderController(
 
     @GetMapping("/orders/{orderId}")
     fun detail(@PathVariable orderId: Long, @RequestParam customerId: Long): ResponseEntity<OrderDetailResponse> {
-        val orderDetail = orderService.detail(orderId = orderId)
+        val orderDetail = orderService.detail(orderId = orderId, customerId = customerId)
         if (orderDetail.customerId != customerId) {
             throw NotFoundOrderException("고객의 주문 정보를 찾을 수 없습니다. $customerId")
         }
