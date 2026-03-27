@@ -20,7 +20,7 @@ class StoreDetailPageController (
     private val logger = KotlinLogging.logger {}
 
     @GetMapping("/apis/display/stores/{storeId}")
-    fun list(@PathVariable("storeId") storeId: Long): StoreDetailPageResponse {
+    fun list(@PathVariable storeId: Long): StoreDetailPageResponse {
         val storeOptional = storeService.findByStoreId(storeId);
 
         if(storeOptional.isEmpty) {
@@ -36,12 +36,12 @@ class StoreDetailPageController (
             storeName = store.storeName,
             phone = store.storePhone,
             address = store.address,
-            /*deliveryFee = store.deliveryFee,
+            deliveryFee = store.deliveryFee,
             deliveryTime = store.deliveryTime,
             minimumOrderPrice = store.minimumOrderPrice,
             reviewGrade = store.reviewGrade,
             storeMainImageUrl = store.storeMainImageUrl,
-            description = store.description,*/
+            description = store.description,
             menus = menuDTOs,
         )
     }

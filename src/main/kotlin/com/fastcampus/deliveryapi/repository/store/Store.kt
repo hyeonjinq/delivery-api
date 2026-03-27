@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "stores", catalog = "food_delivery")
@@ -27,8 +28,8 @@ class Store(
     @Column(name = "name", nullable = false)
     val storeName: String,
 
-    /*@Column(name = "main_image_url", nullable = false)
-    val storeMainImageUrl: String,*/
+    @Column(name = "main_image_url", nullable = false)
+    val storeMainImageUrl: String,
 
     @Column(name = "phone", nullable = false)
     val storePhone: String,
@@ -45,14 +46,14 @@ class Store(
     @Column(name = "bank_name", nullable = false)
     val bankName: String,
 
-    /*@Column(name = "description", nullable = false)
-    val description: String,*/
+    @Column(name = "description", nullable = false)
+    val description: String,
 
     @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)
     val storeStatus: StoreStatus,
 
-    /*@Column(name = "delivery_fee", nullable = false)
+    @Column(name = "delivery_fee", nullable = false)
     val deliveryFee: BigDecimal,
 
     @Column(name = "delivery_time", nullable = false)
@@ -62,5 +63,5 @@ class Store(
     val reviewGrade: Int,
 
     @Column(name = "minimum_order_price", nullable = false)
-    val minimumOrderPrice: BigDecimal,*/
+    val minimumOrderPrice: BigDecimal,
 ): BaseEntity()
